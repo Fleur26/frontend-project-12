@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import React from "react";
 import { useFormik } from "formik";
 
+
 const validateUserForm = () => {
   const initialValues = {
     email: "",
@@ -22,9 +23,9 @@ const validateUserForm = () => {
   });
   const formik = useFormik({
      initialValues: {
-       email: "",
-       username: "",
-     password: "",
+        email: "",
+        username: "",
+        password: "",
     },
      onSubmit: (values) => {
      console.log("onSubmit", values);
