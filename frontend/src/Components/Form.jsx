@@ -3,7 +3,6 @@ import * as Yup from "yup";
 import React from "react";
 import { useFormik } from "formik";
 
-
 const validateUserForm = () => {
   const initialValues = {
     email: "",

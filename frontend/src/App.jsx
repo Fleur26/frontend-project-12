@@ -2,7 +2,8 @@ import * as Yup from "yup";
 import React from "react";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { PageError, PageLogin  } from "./Components/Form";
-import PrivatePage from "./Components/PrivatePage";
+import { PrivatePage } from "./Components/PrivatePage.jsx";
+import PrivateRoute from './PrivateRoute.js';
 
 
 const App = () => {
@@ -12,7 +13,7 @@ const App = () => {
       <Routes>
         <Route path="" element={<PageError />} />
         <Route path="login" element={<PageLogin />} />
-        <Route path="private" element={<PrivatePage />} />
+        <PrivateRoute path='admin' element={PrivatePage} />
       </Routes>
     </BrowserRouter>
     </div>  
