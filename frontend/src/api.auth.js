@@ -1,6 +1,6 @@
 import { instance } from "./api.config.js";
 
-export default const AuthService {
+export default class AuthService {
 
     login (email, password) {
         return instance.post("/api/login", {email, password})
