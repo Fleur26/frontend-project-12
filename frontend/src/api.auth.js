@@ -2,8 +2,8 @@ import { instance } from "./api.config.js";
 
 export default class AuthService {
 
-    login (email, password) {
-        return instance.post("/api/login", {email, password})
+    login (email, login, password) {
+        return instance.post("/api/login", {email, login, password})
     }
     
     refreshToken() {

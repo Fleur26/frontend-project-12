@@ -1,6 +1,8 @@
 import { Navigate, Outlet, Route } from "react-router-dom";
 import authStore from "./store.js";
 import { observer } from "mobx-react-lite";
+import React from "react";
+
 
 const PrivateRoute = (props) => {
 

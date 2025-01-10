@@ -2,6 +2,9 @@ import { Formik, Form, ErrorMessage, Field } from "formik";
 import * as Yup from "yup";
 import React from "react";
 import { useFormik } from "formik";
+import axios from 'axios';
+import { redirect } from "react-router-dom";
+
 
 const validateUserForm = () => {
   const initialValues = {
@@ -11,6 +14,20 @@ const validateUserForm = () => {
   };
   const onSubmit = (values) => {
     console.log("onSubmit", values);
+    async (values, { resetForm, isSubmitting }) => {
+      try {
+        console.log(values);
+        const response = await axios.post('/api/v1/login', values);
+        const { data } = response;
+        resetForm();
+        window.localStorage.setItem(data.username, data.token);
+        redirect("/");
+        console.log('getItem', window.localStorage.getItem('admin'));
+        console.log('response', response, 'isSubmitting', isSubmitting);
+      } catch (e) {
+        console.log('error', e);
+      }
+    }
   };
 
   const validationSchema = Yup.object({

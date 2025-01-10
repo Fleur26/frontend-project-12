@@ -1,5 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import AuthService from "./api.auth.js";
+import React from "react";
+
 
 class AuthStore {   
   isAuth = false;
@@ -9,10 +11,10 @@ class AuthStore {
     makeAutoObservable(this, {}, { autoBind: true });
   }
 
-  async login(email, password) {
+  async login(email, login, password) {
     this.isAuthInProgress = true;
     try {
-      const resp = await AuthService.login(email, password);
+      const resp = await AuthService.login(email, login, password);
       localStorage.setItem("token", resp.data.accessToken);
       this.isAuth = true;
 
