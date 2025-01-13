@@ -19,19 +19,24 @@ const LoginPage = () => {
     setError('');
 
     try {
-     
-      useEffect(() => {
-        const fetchData = async () => {
-          const authHeader = await getAuthHeader();
-          dispatch(actions.fetchData(authHeader))
-            .unwrap()
-            .catch((e) => {
-              console.log(e);
-            });
-        };)
-    
-        fetchData();
+      const response = await fetch('https://api.example.com/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+      });
 
+      if (!response.ok) {
+        throw new Error('The username or password is incorrect');
+      }
+
+      const data = await response.json();
+
+  
       localStorage.setItem('authToken', data.token);
 
 
