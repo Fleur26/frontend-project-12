@@ -55,17 +55,7 @@ const AuthButton = () => {
 const App = () => (
   <AuthProvider>
     <Router>
-      <Navbar bg="light" expand="lg">
-        <Navbar.Brand as={Link} to="/">Secret Place</Navbar.Brand>
-        <Nav className="mr-auto">
-          <Nav.Link as={Link} to="/public">Public page</Nav.Link>
-          <Nav.Link as={Link} to="/private">Private page</Nav.Link>
-        </Nav>
-        <AuthButton />
-      </Navbar>
-
       <div className="container p-3">
-        <h1 className="text-center mt-5 mb-4">Welcome to the secret place!</h1>
         <Routes>
           <Route path="/" element={null} />
           <Route path="/public" element={<PublicPage />} />

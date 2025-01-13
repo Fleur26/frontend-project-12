@@ -10,8 +10,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Извлекаем из location информацию о предыдущем пути
-  const redirectTo = location.state?.from || '/'; // если редирект не задан, по умолчанию на главную
+  const redirectTo = location.state?.from || '/'; 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,8 +19,7 @@ const LoginPage = () => {
     setError('');
 
     try {
-      // Подключаемся к API для аутентификации
-      const response = await fetch('https://your-api-url.com/login', {
+      const response = await fetch('login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -38,20 +36,20 @@ const LoginPage = () => {
 
       const data = await response.json();
 
-      // Сохраняем токен в localStorage
+  
       localStorage.setItem('authToken', data.token);
 
-      // Перенаправляем на нужную страницу
+
       navigate(redirectTo);
     } catch (error) {
-      setError(error.message); // Отображаем сообщение об ошибке
+      setError(error.message); 
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    // Если токен уже есть в localStorage, можно сделать редирект на главную страницу
+   
     if (localStorage.getItem('authToken')) {
       navigate('/');
     }

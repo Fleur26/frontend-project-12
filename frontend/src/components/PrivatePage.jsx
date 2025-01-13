@@ -24,17 +24,15 @@ const [data, setData] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Получаем токен из localStorage (или другого места, где он хранится)
+ 
     const token = localStorage.getItem('authToken');
 
     if (!token) {
-      // Если токен не найден, редиректим на страницу авторизации
       navigate('/login');
       return;
     }
 
-    // Выполняем запрос к серверу с заголовком Authorization
-    axios.get('https://example.com/private', {
+    axios.get('/private', {
       headers: {
         'Authorization': `Bearer ${token}`
       }
