@@ -1,91 +1,142 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
+import React, { useEffect, useRef, useState } from 'react';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import {
+  Button, Form, Col, Card, Row,
+} from 'react-bootstrap';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../hooks/index.jsx';
+import routes from '../routes.js';
+
+
+const logInSchema = yup.object({
+  username: yup.string()
+    .matches(/^[a-zA-Z0-9_]+$/, 'Только буквы, цифры и подчеркивания')
+    .min(5, 'От 5 до 20 символов')
+    .max(20, 'От 5 до 20 символов')
+    .required('Обязательное поле'),
+  password: yup.string()
+    .min(5, 'От 5 до 20 символов')
+    .max(20, 'От 5 до 20 символов')
+    .required('Обязательное поле'),
+});
+
 
 const LoginPage = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-
-  const navigate = useNavigate();
+  const auth = useAuth();
+  const [authFailed, setAuthFailed] = useState(false);
   const location = useLocation();
-
-  const redirectTo = location.state?.from || '/'; 
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    setIsLoading(true);
-    setError('');
-
-    try {
-      const response = await fetch('https://api.example.com/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username,
-          password,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('The username or password is incorrect');
-      }
-
-      const data = await response.json();
-
+  const navigate = useNavigate();
+  const input = useRef(null);
   
-      localStorage.setItem('authToken', data.token);
-
-
-      navigate(redirectTo);
-    } catch (error) {
-      setError(error.message); 
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
-   
-    if (localStorage.getItem('authToken')) {
-      navigate('/');
-    }
-  }, [navigate]);
+    input.current.focus();
+  }, []);
+
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      password: '',
+    },
+    validationSchema: logInSchema,
+    onSubmit: async (values) => {
+      setAuthFailed(false);
+
+      try {
+        const res = await axios.post(routes.loginPath(), values);
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('user', JSON.stringify({ ...res.data, username: values.username }));
+        auth.logIn({ username: values.username });
+        
+        const { from } = location.state || { from: { pathname: '/' } };
+        navigate(from);
+      } catch (err) {
+        formik.setSubmitting(false);
+        if (err.isAxiosError && err.response.status === 401) {
+          setAuthFailed(true);
+          input.current.select();
+          return;
+        }
+        throw err;
+      }
+    },
+  });
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        {error && <div style={{ color: 'red' }}>{error}</div>}
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? 'Logging in...' : 'Log In'}
-        </button>
-      </form>
-    </div>
+    <div className="container-fluid h-100 page-container">
+  <Row className="justify-content-center align-items-center h-100">
+    <Col className="col-12 col-md-8 col-xxl-6">
+      <Card className="shadow-sm">
+        <Card.Body className="p-5 mt-4">
+          <Row className="justify-content-center align-items-center h-100 mt-4">
+            <Col xs={12} md={6} className="d-flex justify-content-center mb-4 mb-md-0">             
+            </Col>
+            <Col xs={12} md={6}>
+              <Form onSubmit={formik.handleSubmit}>
+                <h1 className="text-center mb-4">Войти</h1>
+                <fieldset disabled={formik.isSubmitting}>
+                  <Form.Group className="mb-3 form-floating" controlId="username">
+                    <Form.Control
+                      type="text"
+                      onChange={formik.handleChange}
+                      value={formik.values.username}
+                      onBlur={formik.handleBlur}
+                      placeholder="username"
+                      autoComplete="username"
+                      isInvalid={authFailed}
+                      required
+                      ref={input}
+                    />
+                    {formik.touched.username && formik.errors.username && (
+                      <div className="invalid-feedback">{formik.errors.username}</div>
+                    )}
+                    <Form.Label>Ваш ник</Form.Label>
+                  </Form.Group>
+                  <Form.Group className="mb-4 form-floating" controlId="password">
+                    <Form.Control
+                      type="password"
+                      onChange={formik.handleChange}
+                      value={formik.values.password}
+                      onBlur={formik.handleBlur}
+                      placeholder="password"
+                      autoComplete="current-password"
+                      isInvalid={authFailed}
+                      required
+                    />
+                    {formik.touched.password && formik.errors.password && (
+                      <div className="invalid-feedback">{formik.errors.password}</div>
+                    )}
+                    <Form.Label>Пароль</Form.Label>
+                    <Form.Control.Feedback
+                      type="invalid"
+                      className="invalid-feedback"
+                      tooltip
+                    >
+                      Неверные имя пользователя или пароль
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                  <Button type="submit" variant="outline-primary" className="w-100 mb-3">
+                    Войти
+                  </Button>
+                </fieldset>
+              </Form>
+            </Col>
+          </Row>
+        </Card.Body>
+        <Card.Footer className="p-4">
+          <div className="text-center">
+            <span>Нет аккаунта?</span>{' '}
+            <NavLink to="/register">Регистрация</NavLink>
+          </div>
+        </Card.Footer>
+      </Card>
+    </Col>
+  </Row>
+</div>
+
   );
+  
 };
 
 export default LoginPage;
