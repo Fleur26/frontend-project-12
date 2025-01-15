@@ -57,6 +57,53 @@ const AuthButton = () => {
 const App = () => (
   const [socket, setSocket] = useState(null);
 
+  // Инициализация сокета в состоянии
+  const [socket, setSocket] = useState(null);
+
+  useEffect(() => {
+    // Создание нового сокета
+    const newSocket = io({
+      withCredentials: true 
+    });
+
+    // Обработчики сокета
+    newSocket.on('newMessage', (payload) => {
+      dispatch(addMessage(payload));
+    });
+    
+    newSocket.on('newChannel', (payload) => {
+      dispatch(addChannel(payload));
+    });
+    
+    newSocket.on('removeChannel', (payload) => {
+      dispatch(deleteChannel(payload.id));
+    });
+    
+    newSocket.on('renameChannel', (payload) => {
+      dispatch(channelRename(payload));
+    });
+
+    // Установка сокета
+    setSocket(newSocket);
+
+    // Очистка обработчиков и закрытие сокета при размонтировании компонента
+    return () => {
+      newSocket.off('newMessage');
+      newSocket.off('newChannel');
+      newSocket.off('removeChannel');
+      newSocket.off('renameChannel');
+      newSocket.close(); // Закрываем соединение
+    };
+    
+  }, [dispatch]);
+
+  // Дебаунс для отправки сообщений
+  const sendMessage = useDebounce((...args) => {
+    if (socket) { // Проверка на наличие сокета
+      socket.emit('newMessage', ...args);
+    }
+  }, 300);
+
   <AuthProvider>
     <Router>
       <div className="container p-3">
