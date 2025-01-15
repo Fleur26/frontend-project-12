@@ -15,6 +15,8 @@ import LoginPage from './LoginPage.jsx';
 import PrivatePage from './PrivatePage.jsx';
 import AuthContext from '../contexts/index.jsx';
 import useAuth from '../hooks/index.jsx';
+import { io } from 'socket.io-client';
+
 
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -53,6 +55,8 @@ const AuthButton = () => {
 };
 
 const App = () => (
+  const [socket, setSocket] = useState(null);
+
   <AuthProvider>
     <Router>
       <div className="container p-3">

@@ -10,4 +10,4 @@ const getAuthHeader = () => {
     return {};
   };
   
-  export default getAuthHeader; // Экспорт по умолчанию
+  export default getAuthHeader;

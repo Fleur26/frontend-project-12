@@ -8,6 +8,8 @@ import {
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/index.jsx';
 import routes from '../routes.js';
+import { io } from 'socket.io-client';
+
 
 
 const logInSchema = yup.object({
