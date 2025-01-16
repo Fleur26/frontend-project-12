@@ -57,6 +57,40 @@ const AuthButton = () => {
 };
 
 const App = () => (
+  const AuthProvider = ({ children }) => {
+    const savedUserData = JSON.parse(localStorage.getItem('userId'));
+    const [loggedIn, setLoggedIn] = useState(Boolean(savedUserData));
+    const [user, setUser] = useState(
+      savedUserData ? { username: savedUserData.username } : null,
+    );
+  
+    const logIn = useCallback((userData) => {
+      setLoggedIn(true);
+      setUser({ username: userData.username });
+    }, []);
+  
+    const logOut = useCallback(() => {
+      localStorage.removeItem('userId');
+      setUser(null);
+      setLoggedIn(false);
+    }, []);
+  
+    const memoizedValue = useMemo(
+      () => ({
+        loggedIn,
+        logIn,
+        logOut,
+        user,
+      }),
+      [loggedIn, logIn, logOut, user],
+    );
+  
+    return (
+      <AuthContext.Provider value={memoizedValue}>
+        {children}
+      </AuthContext.Provider>
+    );
+  };
   const [socket, setSocket] = useState(null);
 
   // Инициализация сокета в состоянии
