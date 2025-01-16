@@ -16,6 +16,8 @@ import PrivatePage from './PrivatePage.jsx';
 import AuthContext from '../contexts/index.jsx';
 import useAuth from '../hooks/index.jsx';
 import { io } from 'socket.io-client';
+import { useDispatch } from 'react-redux';
+
 
 
 const AuthProvider = ({ children }) => {
