@@ -12,7 +12,7 @@ import { Button, Navbar, Nav } from 'react-bootstrap';
 
 import PublicPage from './PublicPage.jsx';
 import LoginPage from './LoginPage.jsx';
-import PrivatePage from './PrivatePage.jsx';
+import PrivatePage from './ChatPage.jsx';
 import AuthContext from '../contexts/index.jsx';
 import useAuth from '../hooks/index.jsx';
 import { io } from 'socket.io-client';
