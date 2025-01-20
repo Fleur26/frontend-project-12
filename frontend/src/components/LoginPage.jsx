@@ -8,8 +8,7 @@ import {
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/index.jsx';
 import routes from '../routes.js';
-import { io } from 'socket.io-client';
-
+import '../index.css'; // Путь к вашему CSS-файлу
 
 
 const logInSchema = yup.object({
@@ -47,7 +46,7 @@ const LoginPage = () => {
 
       try {
         const res = await axios.post(routes.loginPath(), values);
-        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('token', res.data.token); // отредактировать
         localStorage.setItem('user', JSON.stringify({ ...res.data, username: values.username }));
         auth.logIn({ username: values.username });
         
@@ -72,7 +71,7 @@ const LoginPage = () => {
       <Card className="shadow-sm">
         <Card.Body className="p-5 mt-4">
           <Row className="justify-content-center align-items-center h-100 mt-4">
-            <Col xs={12} md={6} className="d-flex justify-content-center mb-4 mb-md-0">             
+            <Col xs={12} md={6} className="d-flex justify-content-center mb-4 mb-md-0">
             </Col>
             <Col xs={12} md={6}>
               <Form onSubmit={formik.handleSubmit}>
