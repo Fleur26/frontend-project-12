@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { BsPlusSquare } from 'react-icons/bs';
 import { Nav, Button } from 'react-bootstrap';
-import { actions } from '../../slices/index.js';
+import { actions } from '../../../slices/index.js';
 
 const Channels = () => {
   const { channels, currentChannelId } = useSelector((s) => s.channelsInfo);

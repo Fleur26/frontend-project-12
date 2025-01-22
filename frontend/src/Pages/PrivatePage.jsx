@@ -2,8 +2,8 @@ import React, { useEffect, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Container, Row } from 'react-bootstrap';
 
-import Channels from './chatComponents/Channels.jsx';
-import Messages from './chatComponents/Messages.jsx';
+import Channels from '../components/chatComponents/PagesComponents/Channels.jsx';
+import Messages from '../components/chatComponents/PagesComponents/Messages.jsx';
 
 import { actions } from '../slices/index.js';
 import getAuthHeader from '../getAuthHeader.js';
