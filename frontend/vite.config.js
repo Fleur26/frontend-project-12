@@ -1,31 +1,21 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
 export default defineConfig({
+  plugins: [react()],
   server: {
+    port: 5002,
     proxy: {
-      // string shorthand
-      '/foo': 'http://localhost:4567',
-      // с options
+      // Проксируем запросы к API
       '/api': {
-        target: 'http://jsonplaceholder.typicode.com',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
+        target: 'http://localhost:5001',
       },
-      // с регуляркой (RegEx)
-      '^/fallback/.*': {
-        target: 'http://jsonplaceholder.typicode.com',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/fallback/, '')
+      // Проксируем WebSocket соединения
+      '/socket.io': {
+        target: 'ws://localhost:5001',
+        ws: true,
+        rewriteWsOrigin: true,
       },
-      // использование proxy instance
-      '/api': {
-        target: 'http://jsonplaceholder.typicode.com',
-        changeOrigin: true,
-        configure: (proxy, options) => {
-          // proxy будет экземпляром 'http-proxy'
-        }
-      }
-    }
-  }
-})
+    },
+  },
+});
