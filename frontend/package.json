@@ -2,14 +2,13 @@
   "name": "frontend",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
-  "proxy": "http://localhost:5001/",
+  "proxy": "http://localhost:5001",
+  "node": true,
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
     "start": "npx start-server -s ./dist",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "build": "vite build",
+    "serve": "vite preview"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.4.0",
