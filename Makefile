@@ -1,11 +1,20 @@
 install:
- npm ci
+	npm ci && make -C frontend install
+
+build: 
+	npm run build
 
 start:
- npm start
+	make start-backend
 
-build:
- npm build
+start-backend:
+	npm run start
+
+start-frontend:
+	cd frontend && npm start
+
+develop:
+	make start-backend & make start-frontend
 
 lint:
- npx eslint . --ext .js,.jsx --config .eslintrc.yml
+	make -C frontend lint
