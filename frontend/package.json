@@ -14,6 +14,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.4.0",
     "@rollbar/react": "^0.12.0-beta",
+    "@types/node": "^22.13.0",
     "@vitejs/plugin-react": "^4.3.4",
     "axios": "^1.7.8",
     "bootstrap": "^5.3.3",
