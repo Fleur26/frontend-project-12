@@ -8,13 +8,13 @@ const modalSlice = createSlice({
   name: 'modal',
   initialState,
   reducers: {
-    openModal: (state, action) => {
-      state.modalType = action.payload.type;
-      state.channel = action.payload.channel;
+    openModal: (action) => {
+      this.state.modalType = action.payload.type;
+      this.state.channel = action.payload.channel;
     },
-    closeModal: (state) => {
-      state.modalType = null;
-      state.channel = null;
+    closeModal: () => {
+      this.state.modalType = null;
+      this.state.channel = null;
     },
   },
 });

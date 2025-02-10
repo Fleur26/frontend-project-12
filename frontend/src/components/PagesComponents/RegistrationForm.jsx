@@ -56,7 +56,7 @@ const RegistrationForm = () => {
             placeholder="Ваш ник"
             id="username"
             ref={inputRef}
-            isInvalid={isError || formik.touched.username && formik.errors.username}
+            isInvalid={isError || (formik.touched.username && formik.errors.username)}
             onChange={formik.handleChange}
             value={formik.values.username}
           />

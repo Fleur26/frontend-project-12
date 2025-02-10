@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import AuthContext from './AuthContext';
+
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem('token'));
   const [tokenState, setTokenState] = useState(localStorage.getItem('token'));
