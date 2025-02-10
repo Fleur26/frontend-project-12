@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-/* eslint-disable */
+import defaultChannel from '../defaultChannel';
+
 const initialState = {
   activeChannel: defaultChannel,
 };
@@ -12,7 +13,6 @@ const activeChannelsSlice = createSlice({
     },
   },
 });
-/* eslint-enable */
 export const { setActiveChannel } = activeChannelsSlice.actions;
 export const activeChannelSelector = (state) => state.activeChannel.activeChannel;
 export default activeChannelsSlice.reducer;

@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { useFormik } from 'formik';
 import { useRef, useEffect, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';

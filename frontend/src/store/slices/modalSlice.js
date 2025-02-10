@@ -4,7 +4,6 @@ const initialState = {
   modalType: null,
   channel: null,
 };
-/* eslint-disable */
 const modalSlice = createSlice({
   name: 'modal',
   initialState,
@@ -19,6 +18,5 @@ const modalSlice = createSlice({
     },
   },
 });
-/* eslint-enable */
 export const { openModal, closeModal } = modalSlice.actions;
 export default modalSlice.reducer;
