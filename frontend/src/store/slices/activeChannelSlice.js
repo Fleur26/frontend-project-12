@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import defaultChannel from '../../utils/defaultChannel';
 /* eslint-disable */
 const initialState = {
   activeChannel: defaultChannel,
