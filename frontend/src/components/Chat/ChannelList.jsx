@@ -8,7 +8,7 @@ import DropdownMenu from './DropdownMenu';
 import { openModal, closeModal } from '../../store/slices/modalSlice';
 import { activeChannelSelector } from '../../store/slices/activeChannelSlice';
 import getModal from '../Modals';
-import defaultChannel from '../../utils/defaultChannel';
+import defaultChannel from '../../store/defaultChannel';
 import ChannelTitle from './ChannelTitle';
 
 const renderModal = (type, close, channel) => {
