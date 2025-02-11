@@ -53,7 +53,7 @@ const AddModal = ({ closeModal }) => {
       auth.logOut();
     }
     inputRef.current.focus();
-  }, [channels]); /* eslint-disable */
+  }, [channels]);
 
   return (
     <Modal show="true" onHide={closeModal} centered>
