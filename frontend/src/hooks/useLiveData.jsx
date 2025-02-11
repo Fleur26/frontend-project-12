@@ -1,5 +1,5 @@
 import { useGetChannelsQuery } from '../store/api/chatApi';
-import defaultChannel from '../utils/defaultChannel';
+import defaultChannel from '../store/defaultChannel';
 
 const useLiveData = (channel) => {
   const { data: channels, isLoading } = useGetChannelsQuery();
