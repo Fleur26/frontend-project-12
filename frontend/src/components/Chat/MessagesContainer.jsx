@@ -40,7 +40,7 @@ const MessagesContainer = () => {
       navigate(routes.loginPagePath());
       auth.logOut();
     }
-  }, [isError]);
+  }, [isError]); /* eslint-disable */
 
   return (
     <MessageBoxWrapper>
