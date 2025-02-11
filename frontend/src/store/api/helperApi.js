@@ -26,8 +26,6 @@ const addSocketListener = async (
           default:
             break;
         }
-
-        return null;
       });
     };
     socket.on(event, handleEvent);
