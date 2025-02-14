@@ -30,15 +30,17 @@ const MessagesContainer = () => {
   const channelMessages = messages?.filter((message) => message.channelId === activeChannelId);
   const count = channelMessages?.length || 0;
   const [addMessage] = useAddMessageMutation();
-  const username = useAuth()?.username; // Получаем имя пользователя из контекста
+  const username = localStorage.getItem('username');
   const auth = useAuth();
   const navigate = useNavigate();
+  const token = auth.tokenState;
 
-  // Проверка авторизации на уровне контекста
-  if (!auth?.tokenState) {
-    navigate(routes.loginPagePath());
-    return null; // Ожидаем редиректа на страницу входа
-  }
+  useEffect(() => {
+    if (token !== localStorage.getItem('token')) {
+      navigate(routes.loginPagePath());
+      auth.logOut();
+    }
+  }, [isError]);
 
   return (
     <MessageBoxWrapper>
