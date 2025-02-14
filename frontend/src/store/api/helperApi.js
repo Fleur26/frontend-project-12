@@ -1,3 +1,4 @@
+/* eslint-disable */
 const addSocketListener = async (
     socket,
     event,
